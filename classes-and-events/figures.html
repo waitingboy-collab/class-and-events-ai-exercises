@@ -4,82 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ES6 class hierarchy of colorful figures drawn on a canvas, with area and perimeter for each.">
-    <meta name="theme-color" content="#FAFAF8">
+    <meta name="theme-color" content="#F3F1EA">
     <title>Colorful Figures · Classes &amp; Events</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="topbar">
-        <div class="topbar__inner">
-            <a class="brand" href="figures.html" aria-label="Classes &amp; Events: home">
-                <svg class="brand__mark" viewBox="0 0 28 28" aria-hidden="true">
-                    <rect width="28" height="28" rx="8" fill="#4338CA"/>
-                    <rect x="7" y="7" width="9" height="9" rx="2" fill="#FFFFFF" fill-opacity="0.92"/>
-                    <circle cx="17.5" cy="17.5" r="4.75" fill="none" stroke="#FFFFFF" stroke-width="2"/>
-                </svg>
-                <span class="brand__label">Classes &amp; Events</span>
-            </a>
+    <header class="masthead">
+        <div class="wrap masthead__row">
+            <a class="wordmark" href="figures.html">Classes <span>&amp;</span> Events</a>
+            <p class="masthead__meta label">SoftUni · JS with AI</p>
             <nav aria-label="Pages">
-                <ul class="nav">
-                    <li><a href="figures.html" aria-current="page">Figures</a></li>
-                    <li><a href="sizes.html">Sizes</a></li>
-                </ul>
+                <ol class="nav">
+                    <li><a href="figures.html" aria-current="page"><span>01</span> Figures</a></li>
+                    <li><a href="sizes.html"><span>02</span> Sizes</a></li>
+                </ol>
             </nav>
         </div>
     </header>
 
-    <main class="page">
-        <section class="hero" aria-labelledby="page-title">
-            <p class="eyebrow">Part 2 · Canvas visualization</p>
-            <h1 id="page-title" class="display">Colorful <em>Figures</em></h1>
-            <p class="lede">Squares, rectangles, circles and a ring, each built from an ES6 class and drawn in its own color.</p>
+    <main>
+        <section class="hero wrap" aria-labelledby="page-title">
+            <div class="hero__meta">
+                <p class="label">Part 02</p>
+                <p class="label">Canvas visualization</p>
+            </div>
+            <h1 id="page-title" class="hero__title">Colorful<br><span class="mark">figures.</span></h1>
+            <p class="hero__lede">Squares, rectangles, circles and a ring, each one an ES6 class drawn in its own color.</p>
+            <dl class="stats">
+                <div>
+                    <dt>Figures</dt>
+                    <dd>06</dd>
+                </div>
+                <div>
+                    <dt>Classes</dt>
+                    <dd>11</dd>
+                </div>
+                <div>
+                    <dt>Scale</dt>
+                    <dd>1:5</dd>
+                </div>
+            </dl>
         </section>
 
-        <div class="stack">
-            <div class="layout layout--figures">
-                <section class="card" aria-labelledby="scene-title">
-                    <header class="card__header">
-                        <h2 id="scene-title" class="card__title">Scene</h2>
-                        <span class="card__meta">600 × 400 px · 1 unit = 5 px</span>
-                    </header>
+        <div class="ticker" aria-hidden="true">
+            <div class="ticker__track">
+                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
+                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
+                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
+                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
+            </div>
+        </div>
+
+        <section class="section wrap" aria-labelledby="scene-title">
+            <header class="section__head">
+                <span class="section__num">(01)</span>
+                <h2 id="scene-title" class="section__title">Scene</h2>
+                <dl class="notes">
+                    <div>
+                        <dt>Origin</dt>
+                        <dd>Center of the canvas, y axis pointing up.</dd>
+                    </div>
+                    <div>
+                        <dt>Squares &amp; rectangles</dt>
+                        <dd><code>(x, y)</code> is the top-left corner.</dd>
+                    </div>
+                    <div>
+                        <dt>Circles &amp; annulus</dt>
+                        <dd><code>(x, y)</code> is the center.</dd>
+                    </div>
+                    <div>
+                        <dt>Annulus</dt>
+                        <dd>Outer circle minus inner circle, even-odd fill.</dd>
+                    </div>
+                </dl>
+            </header>
+            <div class="section__body">
+                <figure class="plate">
                     <div class="canvas-wrap">
                         <canvas id="scene" aria-label="Drawing of colorful figures"></canvas>
                     </div>
-                </section>
-
-                <aside class="card" aria-labelledby="notes-title">
-                    <header class="card__header">
-                        <h2 id="notes-title" class="card__title">How to read it</h2>
-                    </header>
-                    <dl class="facts">
-                        <div>
-                            <dt>Origin</dt>
-                            <dd>Center of the canvas, with the y axis pointing up.</dd>
-                        </div>
-                        <div>
-                            <dt>Squares &amp; rectangles</dt>
-                            <dd><code>(x, y)</code> is the top-left corner.</dd>
-                        </div>
-                        <div>
-                            <dt>Circles &amp; annulus</dt>
-                            <dd><code>(x, y)</code> is the center.</dd>
-                        </div>
-                        <div>
-                            <dt>Annulus</dt>
-                            <dd>An outer circle minus an inner circle, filled with the even-odd rule.</dd>
-                        </div>
-                    </dl>
-                </aside>
+                    <figcaption>
+                        <span><strong>Fig. 1</strong> Six colorful figures on a coordinate grid</span>
+                        <span>600 × 400 px · 1 unit = 5 px</span>
+                    </figcaption>
+                </figure>
             </div>
+        </section>
 
-            <section class="card" aria-labelledby="table-title">
-                <header class="card__header">
-                    <h2 id="table-title" class="card__title">Measurements</h2>
-                    <span class="card__meta">Rounded to 2 decimals</span>
-                </header>
+        <section class="section wrap" aria-labelledby="table-title">
+            <header class="section__head">
+                <span class="section__num">(02)</span>
+                <h2 id="table-title" class="section__title">Measure&shy;ments</h2>
+                <p class="section__note">Each figure's <code>toString()</code>, area and perimeter, rounded to two decimals.</p>
+            </header>
+            <div class="section__body">
                 <div class="table-wrap">
                     <table>
                         <thead>
@@ -92,12 +113,18 @@
                         <tbody id="figures-table"></tbody>
                     </table>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
-        <div class="footer__inner">SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</div>
+        <div class="wrap">
+            <p class="footer__mark">Classes <em>&amp;</em> Events</p>
+            <div class="footer__row">
+                <p>SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</p>
+                <a href="sizes.html">Next: Text sizes →</a>
+            </div>
+        </div>
     </footer>
 
     <script src="figures.js"></script>

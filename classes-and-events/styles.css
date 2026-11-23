@@ -125,6 +125,18 @@ code {
     font-size: 0.85em;
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .wrap {
     width: 100%;
     max-width: var(--content-width);
@@ -386,8 +398,9 @@ code {
     padding-bottom: var(--space-9);
 }
 
+/* Divider drawn inside the gutters so it lines up with the content edges */
 .section + .section {
-    border-top: 1px solid var(--rule-strong);
+    background: linear-gradient(var(--ink), var(--ink)) var(--gutter) 0 / calc(100% - 2 * var(--gutter)) 1px no-repeat;
 }
 
 .section__head {

@@ -4,45 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Print a range of font sizes with a JavaScript click handler.">
-    <meta name="theme-color" content="#FAFAF8">
+    <meta name="theme-color" content="#F3F1EA">
     <title>Text Sizes · Classes &amp; Events</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="topbar">
-        <div class="topbar__inner">
-            <a class="brand" href="figures.html" aria-label="Classes &amp; Events: home">
-                <svg class="brand__mark" viewBox="0 0 28 28" aria-hidden="true">
-                    <rect width="28" height="28" rx="8" fill="#4338CA"/>
-                    <rect x="7" y="7" width="9" height="9" rx="2" fill="#FFFFFF" fill-opacity="0.92"/>
-                    <circle cx="17.5" cy="17.5" r="4.75" fill="none" stroke="#FFFFFF" stroke-width="2"/>
-                </svg>
-                <span class="brand__label">Classes &amp; Events</span>
-            </a>
+    <header class="masthead">
+        <div class="wrap masthead__row">
+            <a class="wordmark" href="figures.html">Classes <span>&amp;</span> Events</a>
+            <p class="masthead__meta label">SoftUni · JS with AI</p>
             <nav aria-label="Pages">
-                <ul class="nav">
-                    <li><a href="figures.html">Figures</a></li>
-                    <li><a href="sizes.html" aria-current="page">Sizes</a></li>
-                </ul>
+                <ol class="nav">
+                    <li><a href="figures.html"><span>01</span> Figures</a></li>
+                    <li><a href="sizes.html" aria-current="page"><span>02</span> Sizes</a></li>
+                </ol>
             </nav>
         </div>
     </header>
 
-    <main class="page">
-        <section class="hero" aria-labelledby="page-title">
-            <p class="eyebrow">Part 3 · Event handlers</p>
-            <h1 id="page-title" class="display">Text <em>Sizes</em></h1>
-            <p class="lede">Pick a start and an end size, then print every size in between, one line each.</p>
+    <main>
+        <section class="hero wrap" aria-labelledby="page-title">
+            <div class="hero__meta">
+                <p class="label">Part 03</p>
+                <p class="label">Event handlers</p>
+            </div>
+            <h1 id="page-title" class="hero__title">Text<br><span class="mark">sizes.</span></h1>
+            <p class="hero__lede">Pick a start and an end size, then print every size in between, one line each.</p>
+            <dl class="stats">
+                <div>
+                    <dt>Range</dt>
+                    <dd>1–99</dd>
+                </div>
+                <div>
+                    <dt>Unit</dt>
+                    <dd>pt</dd>
+                </div>
+                <div>
+                    <dt>Event</dt>
+                    <dd>click</dd>
+                </div>
+            </dl>
         </section>
 
-        <div class="layout layout--sizes">
-            <section class="card card--controls" aria-labelledby="controls-title">
-                <header class="card__header">
-                    <h2 id="controls-title" class="card__title">Range</h2>
-                </header>
+        <div class="ticker" aria-hidden="true">
+            <div class="ticker__track">
+                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
+                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
+                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
+                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
+            </div>
+        </div>
+
+        <section class="section wrap" aria-labelledby="controls-title">
+            <div class="section__head">
+                <span class="section__num">(01)</span>
+                <h2 id="controls-title" class="section__title">Range</h2>
                 <div class="form">
                     <div class="field">
                         <label for="start-size">Start size</label>
@@ -52,23 +71,25 @@
                         <label for="end-size">End size</label>
                         <input type="number" id="end-size" min="2" max="99" step="1" value="20">
                     </div>
-                    <p class="hint">Rule: <code>0 &lt; start &lt; end &lt; 100</code></p>
+                    <p class="rule-hint"><span>Rule</span> <code>0 &lt; start &lt; end &lt; 100</code></p>
                     <button type="button" onclick="printText()">Print text</button>
                 </div>
-            </section>
-
-            <section class="card" aria-labelledby="output-title">
-                <header class="card__header">
-                    <h2 id="output-title" class="card__title">Output</h2>
-                    <span class="card__meta">Sizes in pt</span>
-                </header>
+            </div>
+            <div class="section__body">
+                <h2 id="output-title" class="visually-hidden">Output</h2>
                 <div id="output" class="output" aria-live="polite"></div>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
-        <div class="footer__inner">SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</div>
+        <div class="wrap">
+            <p class="footer__mark">Classes <em>&amp;</em> Events</p>
+            <div class="footer__row">
+                <p>SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</p>
+                <a href="figures.html">← Back: Colorful figures</a>
+            </div>
+        </div>
     </footer>
 
     <script>
