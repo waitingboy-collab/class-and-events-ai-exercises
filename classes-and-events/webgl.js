@@ -247,16 +247,16 @@ const WebGLKit = (() => {
             float f = fbm(p * 1.1 + 2.6 * r);
 
             vec3 iri = palette(f * 1.4 + r.y * 0.6 + t * 0.6 + 0.55);
-            float cloud = smoothstep(0.42, 1.0, f);
+            float cloud = smoothstep(0.28, 0.78, f);
             cloud *= cloud;
 
             // Contour lines give the clouds a holographic, topographic look.
-            float iso = abs(fract(f * 9.0) - 0.5);
-            float contour = smoothstep(0.07, 0.0, iso);
+            float iso = abs(fract(f * 6.0) - 0.5);
+            float contour = smoothstep(0.05, 0.0, iso) * smoothstep(0.3, 0.6, f);
 
-            vec3 col = vec3(0.012, 0.013, 0.026);
-            col += iri * cloud * 0.8;
-            col += iri * contour * (0.05 + cloud * 0.7);
+            vec3 col = vec3(0.014, 0.015, 0.03);
+            col += iri * cloud * 0.95;
+            col += iri * contour * (0.02 + cloud * 0.35);
 
             // Soft light that follows the cursor.
             float md = length(p - mouse);

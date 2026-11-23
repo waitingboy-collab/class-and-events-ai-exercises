@@ -149,8 +149,8 @@
                 [...document.getElementById("output").children].forEach((line, i) => {
                     line.animate(
                         [
-                            { opacity: 0, transform: "translateX(-24px)", filter: "blur(8px)" },
-                            { opacity: 1, transform: "none", filter: "blur(0)" },
+                            { opacity: 0, transform: "translateX(-24px)" },
+                            { opacity: 1, transform: "none" },
                         ],
                         { duration: 520, delay: Math.min(i * 35, 1200), easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
                     );

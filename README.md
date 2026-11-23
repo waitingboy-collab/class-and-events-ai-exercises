@@ -16,9 +16,10 @@ The site root, https://classes-and-events-h8uxj1.netlify.app, opens the figures 
 ```
 classes-and-events/
   figures.js     class hierarchy + console demo (runs in Node and in the browser)
-  figures.html   draws colorful figures on a <canvas> and lists them in a table
-  sizes.html     two number inputs + a button that prints "Size N" lines
-  styles.css     shared light theme for both pages
+  figures.html   renders the colorful figures with a WebGL fragment shader and lists them in a table
+  sizes.html     two number inputs + a button that prints "Size N" lines, over a reactive WebGL backdrop
+  webgl.js       tiny raw-WebGL toolkit (no libraries): shader canvas + animated page backdrop
+  styles.css     shared dark "glass over shader" theme for both pages
   _redirects     Netlify rule: "/" serves figures.html
 ```
 
@@ -40,18 +41,18 @@ Annulus({20, -10}, ext. radius = 15, int. radius = 5, color = #EE3333)
 
 ### Part 2: Visualization (`figures.html`)
 
-Loads `figures.js`, creates six colorful figures and draws them on a canvas. The origin is in the center, y points up, and 1 unit = 5 px. The annulus is drawn as a real ring: an outer circle and an inner circle filled with the even-odd rule. Below the drawing, a table shows each figure's `toString()`, area and perimeter.
+Loads `figures.js`, creates six colorful figures and draws them on a canvas with **WebGL**. The origin is in the center, y points up, and 1 unit = 5 px. Every figure is passed to a GLSL fragment shader as uniforms and drawn as a signed distance field (box, circle, or ring for the annulus, so its hole stays empty), with a glow and a grow-in animation. Moving the cursor over the scene shows its coordinates and picks the figure under it; hovering a table row highlights the same figure. Below the drawing, a table shows each figure's `toString()`, area and perimeter. Browsers without WebGL get a Canvas 2D fallback.
 
 ### Part 3: Event handlers (`sizes.html`)
 
-A **Print text** button with an `onclick` handler reads *Start size* and *End size*. If `0 < start < end < 100` is false, it shows **Invalid range**. Otherwise it prints one `<div style="font-size: Npt">Size N</div>` for every size in the range. The elements are built with `document.createElement`, and the output is cleared on every click.
+A **Print text** button with an `onclick` handler reads *Start size* and *End size*. If `0 < start < end < 100` is false, it shows **Invalid range**. Otherwise it prints one `<div style="font-size: Npt">Size N</div>` for every size in the range. The elements are built with `document.createElement`, and the output is cleared on every click. Each click also sends a ripple through the WebGL backdrop; an invalid range makes it glitch red.
 
 ## How the website was made
 
 1. **Prompt.** The exercise was turned into a detailed prompt: the required classes, their exact `toString()` formats, the HTML pages and the styling rules. It also listed two traps in the original assignment text: a Cyrillic "а" hidden in `rаdius` and the invalid CSS `font-size=5pt`.
 2. **AI-assisted coding.** The code was written with [Claude Code](https://claude.com/claude-code) in VS Code, working from that prompt.
 3. **Testing the classes.** `node figures.js` runs the demo and prints every figure with its area and perimeter. It also shows `move()` / `resetPosition()` and checks that the abstract classes and invalid values throw errors. The source was checked for non-Latin characters.
-4. **The pages.** `figures.html` and `sizes.html` reuse the same `figures.js` file: at the end it exports the classes with `module.exports` only when `module` exists. Both pages share `styles.css`: a light theme with one accent color, a centered card layout, and a mobile layout.
+4. **The pages.** `figures.html` and `sizes.html` reuse the same `figures.js` file: at the end it exports the classes with `module.exports` only when `module` exists. Both pages share `styles.css` and `webgl.js`: a dark theme where frosted-glass panels float over a live WebGL shader (domain-warped noise with an iridescent palette that follows the cursor and scroll). The shaders pause when the tab is hidden and stay still for users who prefer reduced motion.
 5. **Deploying.** The `classes-and-events` folder was deployed to Netlify with the Netlify CLI. It has no build step; the files are uploaded as they are:
 
    ```bash
