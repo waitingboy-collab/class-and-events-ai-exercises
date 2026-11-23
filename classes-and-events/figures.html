@@ -3,39 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colorful Figures</title>
+    <meta name="description" content="ES6 class hierarchy of colorful figures drawn on a canvas, with area and perimeter for each.">
+    <meta name="theme-color" content="#FAFAF8">
+    <title>Colorful Figures · Classes &amp; Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="nav">
-        <a href="figures.html" aria-current="page">Figures</a>
-        <a href="sizes.html">Sizes</a>
-    </nav>
-
-    <main class="card">
-        <h1>Colorful Figures</h1>
-        <p class="subtitle">
-            Origin in the center, y axis pointing up, 1 unit = 5 px.
-            (x, y) is the top-left corner of squares and rectangles and the center of circles.
-        </p>
-
-        <div class="canvas-wrap">
-            <canvas id="scene" aria-label="Drawing of colorful figures"></canvas>
+    <header class="topbar">
+        <div class="topbar__inner">
+            <a class="brand" href="figures.html" aria-label="Classes &amp; Events: home">
+                <svg class="brand__mark" viewBox="0 0 28 28" aria-hidden="true">
+                    <rect width="28" height="28" rx="8" fill="#4338CA"/>
+                    <rect x="7" y="7" width="9" height="9" rx="2" fill="#FFFFFF" fill-opacity="0.92"/>
+                    <circle cx="17.5" cy="17.5" r="4.75" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+                </svg>
+                <span class="brand__label">Classes &amp; Events</span>
+            </a>
+            <nav aria-label="Pages">
+                <ul class="nav">
+                    <li><a href="figures.html" aria-current="page">Figures</a></li>
+                    <li><a href="sizes.html">Sizes</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Figure</th>
-                        <th class="num">Area</th>
-                        <th class="num">Perimeter</th>
-                    </tr>
-                </thead>
-                <tbody id="figures-table"></tbody>
-            </table>
+    <main class="page">
+        <section class="hero" aria-labelledby="page-title">
+            <p class="eyebrow">Part 2 · Canvas visualization</p>
+            <h1 id="page-title" class="display">Colorful <em>Figures</em></h1>
+            <p class="lede">Squares, rectangles, circles and a ring, each built from an ES6 class and drawn in its own color.</p>
+        </section>
+
+        <div class="stack">
+            <div class="layout layout--figures">
+                <section class="card" aria-labelledby="scene-title">
+                    <header class="card__header">
+                        <h2 id="scene-title" class="card__title">Scene</h2>
+                        <span class="card__meta">600 × 400 px · 1 unit = 5 px</span>
+                    </header>
+                    <div class="canvas-wrap">
+                        <canvas id="scene" aria-label="Drawing of colorful figures"></canvas>
+                    </div>
+                </section>
+
+                <aside class="card" aria-labelledby="notes-title">
+                    <header class="card__header">
+                        <h2 id="notes-title" class="card__title">How to read it</h2>
+                    </header>
+                    <dl class="facts">
+                        <div>
+                            <dt>Origin</dt>
+                            <dd>Center of the canvas, with the y axis pointing up.</dd>
+                        </div>
+                        <div>
+                            <dt>Squares &amp; rectangles</dt>
+                            <dd><code>(x, y)</code> is the top-left corner.</dd>
+                        </div>
+                        <div>
+                            <dt>Circles &amp; annulus</dt>
+                            <dd><code>(x, y)</code> is the center.</dd>
+                        </div>
+                        <div>
+                            <dt>Annulus</dt>
+                            <dd>An outer circle minus an inner circle, filled with the even-odd rule.</dd>
+                        </div>
+                    </dl>
+                </aside>
+            </div>
+
+            <section class="card" aria-labelledby="table-title">
+                <header class="card__header">
+                    <h2 id="table-title" class="card__title">Measurements</h2>
+                    <span class="card__meta">Rounded to 2 decimals</span>
+                </header>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Figure</th>
+                                <th scope="col" class="num">Area</th>
+                                <th scope="col" class="num">Perimeter</th>
+                            </tr>
+                        </thead>
+                        <tbody id="figures-table"></tbody>
+                    </table>
+                </div>
+            </section>
         </div>
     </main>
+
+    <footer class="footer">
+        <div class="footer__inner">SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</div>
+    </footer>
 
     <script src="figures.js"></script>
     <script>
