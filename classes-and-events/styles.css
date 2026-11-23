@@ -471,6 +471,10 @@ tbody tr:hover {
     background: var(--surface-sunken);
 }
 
+tbody td:first-child {
+    white-space: nowrap;
+}
+
 td code {
     color: var(--text);
     font-size: 13px;
