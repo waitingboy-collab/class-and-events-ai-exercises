@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Sizes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="nav">
+        <a href="figures.html">Figures</a>
+        <a href="sizes.html" aria-current="page">Sizes</a>
+    </nav>
+
+    <main class="card">
+        <h1>Text Sizes</h1>
+        <p class="subtitle">Enter a range where 0 &lt; start &lt; end &lt; 100, then click the button.</p>
+
+        <div class="form-row">
+            <div class="field">
+                <label for="start-size">Start size</label>
+                <input type="number" id="start-size" min="1" max="98" step="1" value="5">
+            </div>
+            <div class="field">
+                <label for="end-size">End size</label>
+                <input type="number" id="end-size" min="2" max="99" step="1" value="20">
+            </div>
+            <button type="button" onclick="printText()">Print text</button>
+        </div>
+
+        <div id="output" class="output" aria-live="polite"></div>
+    </main>
+
+    <script>
+        "use strict";
+
+        function printText() {
+            const start = Number(document.getElementById("start-size").value);
+            const end = Number(document.getElementById("end-size").value);
+            const output = document.getElementById("output");
+
+            // Clear the previous output on every click.
+            output.replaceChildren();
+
+            // Empty input -> 0 and non-numeric -> NaN; both fail this check.
+            if (!(0 < start && start < end && end < 100)) {
+                const error = document.createElement("div");
+                error.className = "error";
+                error.textContent = "Invalid range";
+                output.appendChild(error);
+                return;
+            }
+
+            for (let size = start; size <= end; size++) {
+                const line = document.createElement("div");
+                line.style.fontSize = `${size}pt`;
+                line.textContent = `Size ${size}`;
+                output.appendChild(line);
+            }
+        }
+    </script>
+</body>
+</html>
