@@ -3,137 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ES6 class hierarchy of colorful figures drawn on a canvas, with area and perimeter for each.">
-    <meta name="theme-color" content="#F3F1EA">
+    <meta name="description" content="ES6 class hierarchy of colorful figures rendered with a WebGL fragment shader, with area and perimeter for each.">
+    <meta name="theme-color" content="#04050a">
     <title>Colorful Figures · Classes &amp; Events</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400..700&family=Unbounded:wght@400..800&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="masthead">
-        <div class="wrap masthead__row">
-            <a class="wordmark" href="figures.html">Classes <span>&amp;</span> Events</a>
-            <p class="masthead__meta label">SoftUni · JS with AI</p>
-            <nav aria-label="Pages">
-                <ol class="nav">
-                    <li><a href="figures.html" aria-current="page"><span>01</span> Figures</a></li>
-                    <li><a href="sizes.html"><span>02</span> Sizes</a></li>
-                </ol>
-            </nav>
-        </div>
-    </header>
+    <canvas class="backdrop" aria-hidden="true"></canvas>
+
+    <nav class="dock" aria-label="Pages">
+        <a class="dock__logo" href="figures.html" aria-label="Classes and Events, home">C&amp;E</a>
+        <ol class="dock__links">
+            <li><a href="figures.html" aria-current="page"><span>01</span> Figures</a></li>
+            <li><a href="sizes.html"><span>02</span> Sizes</a></li>
+        </ol>
+        <span class="dock__status" data-gl-status>WebGL</span>
+    </nav>
 
     <main>
         <section class="hero wrap" aria-labelledby="page-title">
-            <div class="hero__meta">
-                <p class="label">Part 02</p>
-                <p class="label">Canvas visualization</p>
+            <div class="hero__kicker rise">
+                <span class="chip"><strong>Part 02</strong> Visualization</span>
+                <span class="chip">ES6 classes</span>
+                <span class="chip">Fragment shader</span>
             </div>
-            <h1 id="page-title" class="hero__title">Colorful<br><span class="mark">figures.</span></h1>
-            <p class="hero__lede">Squares, rectangles, circles and a ring, each one an ES6 class drawn in its own color.</p>
-            <dl class="stats">
-                <div>
-                    <dt>Figures</dt>
-                    <dd>06</dd>
-                </div>
-                <div>
-                    <dt>Classes</dt>
-                    <dd>11</dd>
-                </div>
-                <div>
-                    <dt>Scale</dt>
-                    <dd>1:5</dd>
-                </div>
+            <div>
+                <h1 id="page-title" class="hero__title rise" style="--d: 1">
+                    <span>Colorful</span>
+                    <span class="outline">Figures</span>
+                </h1>
+                <p class="hero__lede rise" style="--d: 2">Squares, rectangles, circles and a ring. Each one is an ES6 class, drawn as a signed distance field on the GPU.</p>
+            </div>
+            <dl class="spec rise" style="--d: 3">
+                <div><dt>Figures</dt><dd>06</dd></div>
+                <div><dt>Classes</dt><dd>11</dd></div>
+                <div><dt>Scale</dt><dd>1:5</dd></div>
+                <div><dt>Renderer</dt><dd>GLSL</dd></div>
             </dl>
         </section>
 
-        <div class="ticker" aria-hidden="true">
-            <div class="ticker__track">
-                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
-                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
-                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
-                <span>Square</span><span>Circle</span><span>Rectangle</span><span>Annulus</span><span>Color</span><span>Figure</span>
-            </div>
-        </div>
-
-        <section class="section wrap" aria-labelledby="scene-title">
-            <header class="section__head">
-                <span class="section__num">(01)</span>
-                <h2 id="scene-title" class="section__title">Scene</h2>
-                <dl class="notes">
-                    <div>
-                        <dt>Origin</dt>
-                        <dd>Center of the canvas, y axis pointing up.</dd>
-                    </div>
-                    <div>
-                        <dt>Squares &amp; rectangles</dt>
-                        <dd><code>(x, y)</code> is the top-left corner.</dd>
-                    </div>
-                    <div>
-                        <dt>Circles &amp; annulus</dt>
-                        <dd><code>(x, y)</code> is the center.</dd>
-                    </div>
-                    <div>
-                        <dt>Annulus</dt>
-                        <dd>Outer circle minus inner circle, even-odd fill.</dd>
-                    </div>
-                </dl>
+        <section class="block wrap" aria-labelledby="scene-title">
+            <header class="block__head">
+                <h2 id="scene-title" class="block__title"><small>01</small> Scene</h2>
+                <p class="block__note">Move the cursor over the scene to read coordinates and pick a figure. Hovering a row in the table lights up the same figure.</p>
             </header>
-            <div class="section__body">
-                <figure class="plate">
-                    <div class="canvas-wrap">
-                        <canvas id="scene" aria-label="Drawing of colorful figures"></canvas>
-                    </div>
-                    <figcaption>
-                        <span><strong>Fig. 1</strong> Six colorful figures on a coordinate grid</span>
-                        <span>600 × 400 px · 1 unit = 5 px</span>
-                    </figcaption>
-                </figure>
-            </div>
+
+            <figure class="panel stage">
+                <div class="stage__viewport">
+                    <canvas id="scene" role="img" aria-label="Six colorful figures on a coordinate grid: two squares, two rectangles, a circle and an annulus"></canvas>
+                    <span class="stage__tag" aria-hidden="true">x: -60…60 · y: -40…40</span>
+                </div>
+                <dl class="hud" aria-live="off">
+                    <div class="hud__cell"><dt>x</dt><dd id="hud-x">—</dd></div>
+                    <div class="hud__cell"><dt>y</dt><dd id="hud-y">—</dd></div>
+                    <div class="hud__cell hud__cell--wide"><dt>Target</dt><dd id="hud-target">Point at a figure</dd></div>
+                </dl>
+                <figcaption class="stage__caption">
+                    <span>Fig. 1 · Six colorful figures on a coordinate grid</span>
+                    <span>600 × 400 logical px · 1 unit = 5 px</span>
+                </figcaption>
+            </figure>
+
+            <dl class="legend">
+                <div><dt>Origin</dt><dd>Center of the canvas, y axis pointing up.</dd></div>
+                <div><dt>Squares &amp; rectangles</dt><dd><code>(x, y)</code> is the top-left corner.</dd></div>
+                <div><dt>Circles &amp; annulus</dt><dd><code>(x, y)</code> is the center.</dd></div>
+                <div><dt>Annulus</dt><dd>Outer circle minus inner circle: the hole stays empty.</dd></div>
+            </dl>
         </section>
 
-        <section class="section wrap" aria-labelledby="table-title">
-            <header class="section__head">
-                <span class="section__num">(02)</span>
-                <h2 id="table-title" class="section__title">Measure&shy;ments</h2>
-                <p class="section__note">Each figure's <code>toString()</code>, area and perimeter, rounded to two decimals.</p>
+        <section class="block wrap" aria-labelledby="table-title">
+            <header class="block__head">
+                <h2 id="table-title" class="block__title"><small>02</small> Measurements</h2>
+                <p class="block__note">Each figure's <code>toString()</code>, area and perimeter, rounded to two decimals.</p>
             </header>
-            <div class="section__body">
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Figure</th>
-                                <th scope="col" class="num">Area</th>
-                                <th scope="col" class="num">Perimeter</th>
-                            </tr>
-                        </thead>
-                        <tbody id="figures-table"></tbody>
-                    </table>
-                </div>
-            </div>
+            <table class="readout">
+                <thead>
+                    <tr>
+                        <th scope="col">Figure</th>
+                        <th scope="col" class="num">Area</th>
+                        <th scope="col" class="num">Perimeter</th>
+                    </tr>
+                </thead>
+                <tbody id="figures-table"></tbody>
+            </table>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="wrap">
-            <p class="footer__mark">Classes <em>&amp;</em> Events</p>
-            <div class="footer__row">
-                <p>SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</p>
-                <a href="sizes.html">Next: Text sizes →</a>
-            </div>
+    <footer class="footer wrap">
+        <a class="panel next" href="sizes.html">
+            <span>
+                <span class="next__label">Next · Part 03</span>
+                <span class="next__title">Text sizes</span>
+            </span>
+            <span class="next__arrow" aria-hidden="true">→</span>
+        </a>
+        <div class="footer__meta">
+            <span>SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</span>
+            <span>Raw WebGL · no libraries</span>
         </div>
     </footer>
 
     <script src="figures.js"></script>
+    <script src="webgl.js"></script>
     <script>
         "use strict";
 
         const WIDTH = 600;   // logical canvas size in CSS pixels
         const HEIGHT = 400;
         const SCALE = 5;     // pixels per figure unit
+        const UNITS_X = WIDTH / SCALE;   // 120 units across
+        const UNITS_Y = HEIGHT / SCALE;  // 80 units tall
+        const MAX_FIGURES = 8;
 
         const figures = [
             new ColorfulSquare(10, 35, 10, new Color(255, 122, 30)),
@@ -144,108 +128,393 @@
             new ColorfulRectangle(40, 30, 15, 25, new Color(255, 193, 7)),
         ];
 
-        // Figure coordinates (y up, origin in center) -> canvas pixels (y down).
-        const toCanvasX = (x) => WIDTH / 2 + x * SCALE;
-        const toCanvasY = (y) => HEIGHT / 2 - y * SCALE;
+        // ------------------------------------------------------------------
+        // Figure -> shader data. type: 0 = box, 1 = circle, 2 = annulus.
+        // geom = (x, y, a, b): box (left, top, width, height),
+        // circle (cx, cy, r, 0), annulus (cx, cy, outer r, inner r).
+        // ------------------------------------------------------------------
 
-        function setupCanvas(canvas) {
-            const ratio = window.devicePixelRatio || 1;
-            canvas.width = WIDTH * ratio;
-            canvas.height = HEIGHT * ratio;
-            const ctx = canvas.getContext("2d");
-            ctx.scale(ratio, ratio);
-            return ctx;
-        }
-
-        function drawGrid(ctx) {
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "#eef0f4";
-            for (let x = 0; x <= WIDTH; x += 10 * SCALE) {
-                ctx.beginPath();
-                ctx.moveTo(x + 0.5, 0);
-                ctx.lineTo(x + 0.5, HEIGHT);
-                ctx.stroke();
-            }
-            for (let y = 0; y <= HEIGHT; y += 10 * SCALE) {
-                ctx.beginPath();
-                ctx.moveTo(0, y + 0.5);
-                ctx.lineTo(WIDTH, y + 0.5);
-                ctx.stroke();
-            }
-
-            ctx.strokeStyle = "#c3c8d2";
-            ctx.beginPath();
-            ctx.moveTo(0, HEIGHT / 2 + 0.5);
-            ctx.lineTo(WIDTH, HEIGHT / 2 + 0.5);
-            ctx.moveTo(WIDTH / 2 + 0.5, 0);
-            ctx.lineTo(WIDTH / 2 + 0.5, HEIGHT);
-            ctx.stroke();
-
-            ctx.fillStyle = "#9aa1ad";
-            ctx.font = "12px system-ui, sans-serif";
-            ctx.fillText("x", WIDTH - 14, HEIGHT / 2 - 6);
-            ctx.fillText("y", WIDTH / 2 + 6, 14);
-        }
-
-        function drawFigure(ctx, figure) {
-            const left = toCanvasX(figure.x);
-            const top = toCanvasY(figure.y);
-
-            ctx.beginPath();
+        function encode(figure) {
             if (figure instanceof ColorfulSquare) {
-                ctx.rect(left, top, figure.width * SCALE, figure.width * SCALE);
-            } else if (figure instanceof ColorfulRectangle) {
-                ctx.rect(left, top, figure.width * SCALE, figure.height * SCALE);
-            } else if (figure instanceof ColorfulCircle) {
-                ctx.arc(left, top, figure.radius * SCALE, 0, 2 * Math.PI);
-            } else if (figure instanceof ColorfulAnnulus) {
-                // Outer circle clockwise, inner circle counter-clockwise -> ring.
-                ctx.arc(left, top, figure.outerRadius * SCALE, 0, 2 * Math.PI, false);
-                ctx.moveTo(left + figure.innerRadius * SCALE, top);
-                ctx.arc(left, top, figure.innerRadius * SCALE, 0, 2 * Math.PI, true);
-            } else {
+                return { type: 0, geom: [figure.x, figure.y, figure.width, figure.width] };
+            }
+            if (figure instanceof ColorfulRectangle) {
+                return { type: 0, geom: [figure.x, figure.y, figure.width, figure.height] };
+            }
+            if (figure instanceof ColorfulCircle) {
+                return { type: 1, geom: [figure.x, figure.y, figure.radius, 0] };
+            }
+            if (figure instanceof ColorfulAnnulus) {
+                return { type: 2, geom: [figure.x, figure.y, figure.outerRadius, figure.innerRadius] };
+            }
+            throw new TypeError(`Cannot draw ${figure}`);
+        }
+
+        const shapes = figures.map(encode);
+
+        function contains(shape, x, y) {
+            const [gx, gy, a, b] = shape.geom;
+            if (shape.type === 0) {
+                return x >= gx && x <= gx + a && y <= gy && y >= gy - b;
+            }
+            const distance = Math.hypot(x - gx, y - gy);
+            return shape.type === 1 ? distance <= a : distance <= a && distance >= b;
+        }
+
+        // Topmost figure under a point: later figures are drawn on top.
+        function figureAt(x, y) {
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                if (contains(shapes[i], x, y)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        // ------------------------------------------------------------------
+        // Fragment shader: grid, axes, then every figure as an SDF with a
+        // rim light, an outer glow and an animated hatch when highlighted.
+        // ------------------------------------------------------------------
+
+        const SCENE_SHADER = `
+            precision highp float;
+            uniform vec2 uRes;
+            uniform float uTime;
+            uniform vec2 uMouse;            // figure units
+            uniform float uMouseOn;
+            uniform vec4 uGeom[${MAX_FIGURES}];
+            uniform vec4 uColor[${MAX_FIGURES}];   // rgb + type
+            uniform float uReveal[${MAX_FIGURES}];
+            uniform float uHighlight[${MAX_FIGURES}];
+            uniform float uFocus;
+            uniform int uCount;
+
+            float sdBox(vec2 p, vec2 halfSize) {
+                vec2 d = abs(p) - halfSize;
+                return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
+            }
+
+            float sdFigure(vec2 p, vec4 g, float type) {
+                if (type < 0.5) {
+                    vec2 halfSize = g.zw * 0.5;
+                    return sdBox(p - vec2(g.x + halfSize.x, g.y - halfSize.y), halfSize);
+                }
+                float r = length(p - g.xy);
+                if (type < 1.5) {
+                    return r - g.z;
+                }
+                return abs(r - (g.z + g.w) * 0.5) - (g.z - g.w) * 0.5;
+            }
+
+            float line(float coord, float spacing, float width) {
+                float d = abs(fract(coord / spacing + 0.5) - 0.5) * spacing;
+                return 1.0 - smoothstep(0.0, width, d);
+            }
+
+            void main() {
+                vec2 uv = gl_FragCoord.xy / uRes;
+                vec2 p = (uv - 0.5) * vec2(${UNITS_X.toFixed(1)}, ${UNITS_Y.toFixed(1)});
+                float px = ${UNITS_X.toFixed(1)} / uRes.x;   // one pixel in units
+
+                vec3 col = vec3(0.016, 0.018, 0.034);
+                col += vec3(0.03, 0.04, 0.09) * (1.0 - length(uv - 0.5) * 1.4);
+
+                // Grid: minor every 5 units, major every 10, brighter near the cursor.
+                vec2 dm = p - uMouse;
+                float spot = uMouseOn * exp(-dot(dm, dm) * 0.004);
+                float minor = max(line(p.x, 5.0, px), line(p.y, 5.0, px));
+                float major = max(line(p.x, 10.0, px * 1.3), line(p.y, 10.0, px * 1.3));
+                col += vec3(0.42, 0.52, 0.85) * (minor * 0.04 + major * 0.08) * (1.0 + spot * 3.5);
+
+                // Dots on major intersections.
+                vec2 cell = abs(fract(p / 10.0 + 0.5) - 0.5) * 10.0;
+                col += vec3(0.55, 0.75, 1.0) * (1.0 - smoothstep(0.0, px * 2.2, length(cell))) * 0.35;
+
+                // Axes.
+                float axis = max(1.0 - smoothstep(0.0, px * 1.6, abs(p.x)),
+                                 1.0 - smoothstep(0.0, px * 1.6, abs(p.y)));
+                col += vec3(0.37, 0.95, 1.0) * axis * 0.5;
+
+                // Scanner sweeping left to right.
+                float sx = mix(-75.0, 75.0, fract(uTime * 0.07));
+                float scan = exp(-abs(p.x - sx) * 0.5);
+                col += vec3(0.37, 0.95, 1.0) * scan * (0.02 + major * 0.18);
+
+                for (int i = 0; i < ${MAX_FIGURES}; i++) {
+                    if (i >= uCount) break;
+                    float reveal = uReveal[i];
+                    if (reveal <= 0.0) continue;
+
+                    vec4 g = uGeom[i];
+                    vec3 c = uColor[i].rgb;
+                    float hl = uHighlight[i];
+                    float dim = 1.0 - 0.62 * uFocus * (1.0 - hl);
+
+                    // While revealing, the shape grows out of its own core.
+                    float d = sdFigure(p, g, uColor[i].w) + (1.0 - reveal) * 22.0;
+
+                    float inside = 1.0 - smoothstep(-px, px, d);
+                    float rim = 1.0 - smoothstep(px * 0.4, px * 2.0, abs(d));
+                    float halo = exp(-max(d, 0.0) * (0.42 - 0.22 * hl)) * step(0.0, d);
+
+                    float depth = smoothstep(-9.0, 0.0, d);          // 0 deep inside, 1 at the edge
+                    float hatch = step(0.55, fract((p.x + p.y) * 0.32 - uTime * 0.8)) * hl;
+                    float shimmer = 0.06 * sin(d * 2.2 - uTime * 3.0);
+                    vec3 body = c * (0.34 + 0.52 * depth + 0.16 * hatch + shimmer);
+
+                    col += c * halo * (0.2 + 0.45 * hl) * dim * reveal;
+                    col = mix(col, body * dim, inside * 0.93 * reveal);
+                    col += mix(c, vec3(1.0), 0.5) * rim * (0.75 + 0.7 * hl) * dim * reveal;
+                }
+
+                // Crosshair and reticle.
+                float hair = max(1.0 - smoothstep(0.0, px, abs(p.x - uMouse.x)),
+                                 1.0 - smoothstep(0.0, px, abs(p.y - uMouse.y)));
+                float reticle = 1.0 - smoothstep(0.0, px * 1.3, abs(length(dm) - 2.4));
+                col += vec3(0.6, 0.92, 1.0) * (hair * 0.16 + reticle * 0.7) * uMouseOn;
+
+                // Scanlines and vignette.
+                col *= 0.95 + 0.05 * sin(gl_FragCoord.y * 2.0);
+                vec2 v = uv - 0.5;
+                col *= 1.0 - dot(v, v) * 0.85;
+
+                gl_FragColor = vec4(col, 1.0);
+            }
+        `;
+
+        // ------------------------------------------------------------------
+        // Interaction state shared by the canvas and the table.
+        // ------------------------------------------------------------------
+
+        const canvas = document.getElementById("scene");
+        const tbody = document.getElementById("figures-table");
+        const hudX = document.getElementById("hud-x");
+        const hudY = document.getElementById("hud-y");
+        const hudTarget = document.getElementById("hud-target");
+
+        const state = {
+            hover: -1,
+            mouse: [0, 0],
+            mouseOn: 0,
+            mouseTarget: 0,
+            focus: 0,
+            highlight: new Float32Array(MAX_FIGURES),
+            revealStart: null,
+        };
+
+        let scene = null;    // ShaderCanvas, or null in the 2D fallback
+
+        function toUnits(event) {
+            const rect = canvas.getBoundingClientRect();
+            return [
+                ((event.clientX - rect.left) / rect.width - 0.5) * UNITS_X,
+                (0.5 - (event.clientY - rect.top) / rect.height) * UNITS_Y,
+            ];
+        }
+
+        function setHover(index) {
+            if (index === state.hover) {
                 return;
             }
-
-            ctx.fillStyle = figure.color.toString();
-            ctx.fill("evenodd");
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = "rgba(0, 0, 0, 0.35)";
-            ctx.stroke();
+            state.hover = index;
+            tbody.querySelectorAll("tr").forEach((row, i) => row.classList.toggle("is-active", i === index));
+            hudTarget.textContent = index >= 0 ? figures[index].toString() : "Point at a figure";
+            if (scene) {
+                scene.invalidate();
+            } else {
+                drawFallback();
+            }
         }
 
-        function fillTable(tbody) {
-            for (const figure of figures) {
+        canvas.addEventListener("pointermove", (event) => {
+            const [x, y] = toUnits(event);
+            state.mouse = [x, y];
+            state.mouseTarget = 1;
+            hudX.textContent = x.toFixed(1);
+            hudY.textContent = y.toFixed(1);
+            setHover(figureAt(x, y));
+            if (scene) {
+                scene.invalidate();
+            }
+        });
+
+        canvas.addEventListener("pointerleave", () => {
+            state.mouseTarget = 0;
+            hudX.textContent = "—";
+            hudY.textContent = "—";
+            setHover(-1);
+        });
+
+        // ------------------------------------------------------------------
+        // Table
+        // ------------------------------------------------------------------
+
+        function fillTable() {
+            figures.forEach((figure, index) => {
                 const row = document.createElement("tr");
+                row.tabIndex = 0;
+                row.style.setProperty("--row-color", figure.color.toString());
 
                 const nameCell = document.createElement("td");
-                const swatch = document.createElement("span");
-                swatch.className = "swatch";
-                swatch.style.background = figure.color.toString();
+                const name = document.createElement("div");
+                name.className = "fig-name";
+                const dot = document.createElement("span");
+                dot.className = "fig-name__dot";
+                dot.style.background = figure.color.toString();
+                dot.style.color = figure.color.toString();
+                const text = document.createElement("div");
+                const kind = document.createElement("strong");
+                kind.textContent = figure.kind;
                 const code = document.createElement("code");
                 code.textContent = figure.toString();
-                nameCell.append(swatch, code);
+                text.append(kind, code);
+                name.append(dot, text);
+                nameCell.appendChild(name);
 
                 const areaCell = document.createElement("td");
                 areaCell.className = "num";
+                areaCell.dataset.label = "Area";
                 areaCell.textContent = figure.area().toFixed(2);
 
                 const perimeterCell = document.createElement("td");
                 perimeterCell.className = "num";
+                perimeterCell.dataset.label = "Perimeter";
                 perimeterCell.textContent = figure.perimeter().toFixed(2);
 
                 row.append(nameCell, areaCell, perimeterCell);
+                row.addEventListener("mouseenter", () => setHover(index));
+                row.addEventListener("mouseleave", () => setHover(-1));
+                row.addEventListener("focus", () => setHover(index));
+                row.addEventListener("blur", () => setHover(-1));
                 tbody.appendChild(row);
-            }
+            });
         }
 
-        const ctx = setupCanvas(document.getElementById("scene"));
-        drawGrid(ctx);
-        figures.forEach((figure) => drawFigure(ctx, figure));
-        fillTable(document.getElementById("figures-table"));
+        // ------------------------------------------------------------------
+        // WebGL renderer
+        // ------------------------------------------------------------------
+
+        const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+        function startWebGL() {
+            const geom = new Float32Array(MAX_FIGURES * 4);
+            const colors = new Float32Array(MAX_FIGURES * 4);
+            shapes.forEach((shape, i) => {
+                geom.set(shape.geom, i * 4);
+                const { red, green, blue } = figures[i].color;
+                colors.set([red / 255, green / 255, blue / 255, shape.type], i * 4);
+            });
+            const reveal = new Float32Array(MAX_FIGURES);
+            const instant = WebGLKit.ShaderCanvas.reducedMotion;
+
+            const shader = new WebGLKit.ShaderCanvas(canvas, SCENE_SHADER, {
+                maxPixelRatio: 2,
+                onFrame(gl, sc, time) {
+                    // Smoothly follow hover and cursor state.
+                    const k = instant ? 1 : 0.16;
+                    for (let i = 0; i < MAX_FIGURES; i++) {
+                        state.highlight[i] += ((i === state.hover ? 1 : 0) - state.highlight[i]) * k;
+                    }
+                    state.focus += ((state.hover >= 0 ? 1 : 0) - state.focus) * k;
+                    state.mouseOn += (state.mouseTarget - state.mouseOn) * (instant ? 1 : 0.2);
+
+                    for (let i = 0; i < figures.length; i++) {
+                        if (instant) {
+                            reveal[i] = 1;
+                        } else if (state.revealStart === null) {
+                            reveal[i] = 0;
+                        } else {
+                            const t = (time - state.revealStart - i * 0.16) / 0.9;
+                            reveal[i] = easeOutCubic(Math.min(1, Math.max(0, t)));
+                        }
+                    }
+
+                    gl.uniform1i(sc.uniform("uCount"), figures.length);
+                    gl.uniform4fv(sc.uniform("uGeom[0]"), geom);
+                    gl.uniform4fv(sc.uniform("uColor[0]"), colors);
+                    gl.uniform1fv(sc.uniform("uReveal[0]"), reveal);
+                    gl.uniform1fv(sc.uniform("uHighlight[0]"), state.highlight);
+                    gl.uniform1f(sc.uniform("uFocus"), state.focus);
+                    gl.uniform2f(sc.uniform("uMouse"), state.mouse[0], state.mouse[1]);
+                    gl.uniform1f(sc.uniform("uMouseOn"), state.mouseOn);
+                },
+            });
+
+            // Start the reveal the first time the scene scrolls into view.
+            const observer = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    state.revealStart = shader.time + 0.15;
+                    observer.disconnect();
+                }
+            }, { threshold: 0.25 });
+            observer.observe(canvas);
+
+            shader.play();
+            return shader;
+        }
+
+        // ------------------------------------------------------------------
+        // Canvas 2D fallback for browsers without WebGL.
+        // ------------------------------------------------------------------
+
+        function drawFallback() {
+            const ratio = window.devicePixelRatio || 1;
+            canvas.width = Math.round(canvas.clientWidth * ratio);
+            canvas.height = Math.round(canvas.clientHeight * ratio);
+            const ctx = canvas.getContext("2d");
+            // Draw in the 600 x 400 logical space, scaled to the real size.
+            ctx.setTransform(canvas.width / WIDTH, 0, 0, canvas.height / HEIGHT, 0, 0);
+            ctx.fillStyle = "#05060c";
+            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+            ctx.strokeStyle = "rgba(110, 135, 220, 0.18)";
+            for (let x = 0; x <= WIDTH; x += 10 * SCALE) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, HEIGHT); ctx.stroke();
+            }
+            for (let y = 0; y <= HEIGHT; y += 10 * SCALE) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(WIDTH, y); ctx.stroke();
+            }
+            ctx.strokeStyle = "rgba(94, 242, 255, 0.6)";
+            ctx.beginPath();
+            ctx.moveTo(0, HEIGHT / 2); ctx.lineTo(WIDTH, HEIGHT / 2);
+            ctx.moveTo(WIDTH / 2, 0); ctx.lineTo(WIDTH / 2, HEIGHT);
+            ctx.stroke();
+
+            const cx = (x) => WIDTH / 2 + x * SCALE;
+            const cy = (y) => HEIGHT / 2 - y * SCALE;
+            shapes.forEach((shape, i) => {
+                const [gx, gy, a, b] = shape.geom;
+                ctx.beginPath();
+                if (shape.type === 0) {
+                    ctx.rect(cx(gx), cy(gy), a * SCALE, b * SCALE);
+                } else {
+                    ctx.arc(cx(gx), cy(gy), a * SCALE, 0, 2 * Math.PI);
+                    if (shape.type === 2) {
+                        ctx.moveTo(cx(gx) + b * SCALE, cy(gy));
+                        ctx.arc(cx(gx), cy(gy), b * SCALE, 0, 2 * Math.PI, true);
+                    }
+                }
+                ctx.globalAlpha = state.hover >= 0 && state.hover !== i ? 0.35 : 1;
+                ctx.fillStyle = figures[i].color.toString();
+                ctx.fill("evenodd");
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+                ctx.stroke();
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        // ------------------------------------------------------------------
+        // Boot
+        // ------------------------------------------------------------------
+
+        WebGLKit.boot();
+        fillTable();
+        try {
+            scene = startWebGL();
+        } catch (error) {
+            console.warn("Scene falls back to Canvas 2D:", error);
+            drawFallback();
+            window.addEventListener("resize", drawFallback);
+        }
     </script>
 </body>
 </html>

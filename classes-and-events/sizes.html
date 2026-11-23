@@ -3,97 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Print a range of font sizes with a JavaScript click handler.">
-    <meta name="theme-color" content="#F3F1EA">
+    <meta name="description" content="Print a range of font sizes with a JavaScript click handler, over a live WebGL shader.">
+    <meta name="theme-color" content="#04050a">
     <title>Text Sizes · Classes &amp; Events</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400..700&family=Unbounded:wght@400..800&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="masthead">
-        <div class="wrap masthead__row">
-            <a class="wordmark" href="figures.html">Classes <span>&amp;</span> Events</a>
-            <p class="masthead__meta label">SoftUni · JS with AI</p>
-            <nav aria-label="Pages">
-                <ol class="nav">
-                    <li><a href="figures.html"><span>01</span> Figures</a></li>
-                    <li><a href="sizes.html" aria-current="page"><span>02</span> Sizes</a></li>
-                </ol>
-            </nav>
-        </div>
-    </header>
+    <canvas class="backdrop" aria-hidden="true"></canvas>
+
+    <nav class="dock" aria-label="Pages">
+        <a class="dock__logo" href="figures.html" aria-label="Classes and Events, home">C&amp;E</a>
+        <ol class="dock__links">
+            <li><a href="figures.html"><span>01</span> Figures</a></li>
+            <li><a href="sizes.html" aria-current="page"><span>02</span> Sizes</a></li>
+        </ol>
+        <span class="dock__status" data-gl-status>WebGL</span>
+    </nav>
 
     <main>
         <section class="hero wrap" aria-labelledby="page-title">
-            <div class="hero__meta">
-                <p class="label">Part 03</p>
-                <p class="label">Event handlers</p>
+            <div class="hero__kicker rise">
+                <span class="chip"><strong>Part 03</strong> Event handlers</span>
+                <span class="chip">onclick</span>
+                <span class="chip">createElement</span>
             </div>
-            <h1 id="page-title" class="hero__title">Text<br><span class="mark">sizes.</span></h1>
-            <p class="hero__lede">Pick a start and an end size, then print every size in between, one line each.</p>
-            <dl class="stats">
-                <div>
-                    <dt>Range</dt>
-                    <dd>1–99</dd>
-                </div>
-                <div>
-                    <dt>Unit</dt>
-                    <dd>pt</dd>
-                </div>
-                <div>
-                    <dt>Event</dt>
-                    <dd>click</dd>
-                </div>
+            <div>
+                <h1 id="page-title" class="hero__title rise" style="--d: 1">
+                    <span>Text</span>
+                    <span class="outline">Sizes</span>
+                </h1>
+                <p class="hero__lede rise" style="--d: 2">Pick a start and an end size, then print every size in between. Each click sends a ripple through the shader; an invalid range makes it glitch.</p>
+            </div>
+            <dl class="spec rise" style="--d: 3">
+                <div><dt>Range</dt><dd>1–99</dd></div>
+                <div><dt>Unit</dt><dd>pt</dd></div>
+                <div><dt>Event</dt><dd>click</dd></div>
+                <div><dt>Backdrop</dt><dd>GLSL</dd></div>
             </dl>
         </section>
 
-        <div class="ticker" aria-hidden="true">
-            <div class="ticker__track">
-                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
-                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
-                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
-                <span>onclick</span><span>createElement</span><span>font-size</span><span>appendChild</span><span>Size 5</span><span>Size 99</span>
-            </div>
-        </div>
+        <section class="block wrap" aria-labelledby="controls-title">
+            <header class="block__head">
+                <h2 id="controls-title" class="block__title"><small>01</small> Range</h2>
+                <p class="block__note">The output is cleared on every click, then one line is printed per size, from start to end.</p>
+            </header>
 
-        <section class="section wrap" aria-labelledby="controls-title">
-            <div class="section__head">
-                <span class="section__num">(01)</span>
-                <h2 id="controls-title" class="section__title">Range</h2>
-                <div class="form">
-                    <div class="field">
-                        <label for="start-size">Start size</label>
-                        <input type="number" id="start-size" min="1" max="98" step="1" value="5">
+            <div class="console">
+                <div class="panel deck">
+                    <div class="deck__fields">
+                        <div class="dial">
+                            <label for="start-size">Start size</label>
+                            <input type="number" id="start-size" min="1" max="98" step="1" value="5">
+                            <span class="dial__unit" aria-hidden="true">pt</span>
+                        </div>
+                        <div class="dial">
+                            <label for="end-size">End size</label>
+                            <input type="number" id="end-size" min="2" max="99" step="1" value="20">
+                            <span class="dial__unit" aria-hidden="true">pt</span>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="end-size">End size</label>
-                        <input type="number" id="end-size" min="2" max="99" step="1" value="20">
-                    </div>
-                    <p class="rule-hint"><span>Rule</span> <code>0 &lt; start &lt; end &lt; 100</code></p>
-                    <button type="button" onclick="printText()">Print text</button>
+                    <p class="rule"><span>Rule</span> <code>0 &lt; start &lt; end &lt; 100</code></p>
+                    <button type="button" class="fire" id="print-button" onclick="printText()">Print text</button>
+                    <p class="deck__hint">Press <kbd>Enter</kbd> in a field to print.</p>
                 </div>
-            </div>
-            <div class="section__body">
-                <h2 id="output-title" class="visually-hidden">Output</h2>
-                <div id="output" class="output" aria-live="polite"></div>
+
+                <div class="panel screen">
+                    <div class="screen__bar">
+                        <span class="screen__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <h2 id="output-title" class="mono">Output</h2>
+                        <span class="mono" id="line-count">0 lines</span>
+                    </div>
+                    <div id="output" class="output" aria-live="polite" aria-labelledby="output-title"></div>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="wrap">
-            <p class="footer__mark">Classes <em>&amp;</em> Events</p>
-            <div class="footer__row">
-                <p>SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</p>
-                <a href="figures.html">← Back: Colorful figures</a>
-            </div>
+    <footer class="footer wrap">
+        <a class="panel next" href="figures.html">
+            <span>
+                <span class="next__label">Back · Part 02</span>
+                <span class="next__title">Colorful figures</span>
+            </span>
+            <span class="next__arrow" aria-hidden="true">←</span>
+        </a>
+        <div class="footer__meta">
+            <span>SoftUni · Fundamentals of Programming with AI · Radoslav Chakarov</span>
+            <span>Raw WebGL · no libraries</span>
         </div>
     </footer>
 
+    <script src="webgl.js"></script>
     <script>
         "use strict";
+
+        const backdrop = WebGLKit.boot();
 
         function printText() {
             const start = Number(document.getElementById("start-size").value);
@@ -109,6 +116,7 @@
                 error.className = "error";
                 error.textContent = "Invalid range";
                 output.appendChild(error);
+                signal(false, 0);
                 return;
             }
 
@@ -118,6 +126,45 @@
                 line.textContent = `Size ${size}`;
                 output.appendChild(line);
             }
+            signal(true, end - start + 1);
+        }
+
+        // Visual feedback only: shader ripple / glitch, line counter and a
+        // staggered entrance (Web Animations API, so the printed elements keep
+        // exactly the required style="font-size: Npt").
+        function signal(ok, count) {
+            document.getElementById("line-count").textContent = ok ? `${count} ${count === 1 ? "line" : "lines"}` : "error";
+
+            const button = document.getElementById("print-button").getBoundingClientRect();
+            const x = button.left + button.width / 2;
+            const y = button.top + button.height / 2;
+            if (ok) {
+                backdrop.pulse([0.37, 0.95, 1.0], x, y);
+            } else {
+                backdrop.pulse([1.0, 0.3, 0.43], x, y);
+                backdrop.glitch();
+            }
+
+            if (ok && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                [...document.getElementById("output").children].forEach((line, i) => {
+                    line.animate(
+                        [
+                            { opacity: 0, transform: "translateX(-24px)", filter: "blur(8px)" },
+                            { opacity: 1, transform: "none", filter: "blur(0)" },
+                        ],
+                        { duration: 520, delay: Math.min(i * 35, 1200), easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
+                    );
+                });
+            }
+        }
+
+        // Enter in either field prints too.
+        for (const id of ["start-size", "end-size"]) {
+            document.getElementById(id).addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    printText();
+                }
+            });
         }
     </script>
 </body>
